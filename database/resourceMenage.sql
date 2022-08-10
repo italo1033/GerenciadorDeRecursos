@@ -1,80 +1,68 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+CREATE DATABASE resource_menager;
 
-CREATE DATABASE `resourcemenage`;
-USE `resourcemenage` ;
+USE resource_menager;
 
-CREATE TABLE IF NOT EXISTS `resourcemenage`.`resource` (
-  `idresource` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  PRIMARY KEY (`idresource`),
-  UNIQUE INDEX `idresource_UNIQUE` (`idresource` ASC) VISIBLE)
-ENGINE = InnoDB;
+CREATE TABLE resource_file (
+    id_resource_file INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(45),
+    PRIMARY KEY (id_resource_file)
+);
 
+CREATE TABLE administrator (
+    idAdministrator INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(45),
+    PRIMARY KEY (idAdministrator)
+);
 
-CREATE TABLE IF NOT EXISTS `resourcemenage`.`Admintrator` (
-  `idAdmintrator` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  `resource_idresource` INT NOT NULL,
-  PRIMARY KEY (`idAdmintrator`),
-  UNIQUE INDEX `idAdmintrator_UNIQUE` (`idAdmintrator` ASC) VISIBLE,
-  INDEX `fk_Admintrator_resource1_idx` (`resource_idresource` ASC) VISIBLE,
-  CONSTRAINT `fk_Admintrator_resource1`
-    FOREIGN KEY (`resource_idresource`)
-    REFERENCES `resourcemenage`.`resource` (`idresource`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE user (
+    idUser INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(45),
+    administratorID INT NOT NULL,
+    PRIMARY KEY (idUser)
+);
 
-CREATE TABLE IF NOT EXISTS `resourcemenage`.`User` (
-  `idUser` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  `Admintrator_idAdmintrator` INT NOT NULL,
-  PRIMARY KEY (`idUser`),
-  UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC) VISIBLE,
-  INDEX `fk_User_Admintrator1_idx` (`Admintrator_idAdmintrator` ASC) VISIBLE,
-  CONSTRAINT `fk_User_Admintrator1`
-    FOREIGN KEY (`Admintrator_idAdmintrator`)
-    REFERENCES `resourcemenage`.`Admintrator` (`idAdmintrator`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE administrator_has_resource(
+  idAdministrator_has_resource INT NOT NULL AUTO_INCREMENT,
+  administratorID INT NOT NULL,
+  resource_fileID INT NOT NULL,
+  PRIMARY KEY (idAdministrator_has_resource)
+);
 
-CREATE TABLE IF NOT EXISTS `resourcemenage`.`Alacation` (
-  `idAlacation` INT NOT NULL AUTO_INCREMENT,
-  `resource_idresource` INT NOT NULL,
-  `dataIntial` DATETIME NULL,
-  `datafinal` DATETIME NULL,
-  PRIMARY KEY (`idAlacation`),
-  UNIQUE INDEX `idAlacation_UNIQUE` (`idAlacation` ASC) VISIBLE,
-  INDEX `fk_Alacation_resource1_idx` (`resource_idresource` ASC) VISIBLE,
-  CONSTRAINT `fk_Alacation_resource1`
-    FOREIGN KEY (`resource_idresource`)
-    REFERENCES `resourcemenage`.`resource` (`idresource`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE  alacation(
+  idAlacation INT NOT NULL AUTO_INCREMENT,
+  resource_fileID INT NOT NULL,
+  dataIntial DATETIME NULL,
+  datafinal DATETIME NULL,
+  PRIMARY KEY (idAlacation)
+);
 
-CREATE TABLE IF NOT EXISTS `resourcemenage`.`User_has_Alacation` (
-  `User_idUser` INT NOT NULL,
-  `Alacation_idAlacation` INT NOT NULL,
-  PRIMARY KEY (`User_idUser`, `Alacation_idAlacation`),
-  INDEX `fk_User_has_Alacation_Alacation1_idx` (`Alacation_idAlacation` ASC) VISIBLE,
-  INDEX `fk_User_has_Alacation_User_idx` (`User_idUser` ASC) VISIBLE,
-  CONSTRAINT `fk_User_has_Alacation_User`
-    FOREIGN KEY (`User_idUser`)
-    REFERENCES `resourcemenage`.`User` (`idUser`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_User_has_Alacation_Alacation1`
-    FOREIGN KEY (`Alacation_idAlacation`)
-    REFERENCES `resourcemenage`.`Alacation` (`idAlacation`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE user_has_Alacation(
+  idUser_has_Alacation INT NOT NULL AUTO_INCREMENT,
+  useID INT NOT NULL,
+  AlacationID INT NOT NULL,
+  PRIMARY KEY (idUser_has_Alacation)
+);
 
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+
+-- add FK USER ADMINISTRATOR
+ALTER TABLE user ADD FOREIGN KEY (administratorID) REFERENCES administrator(idAdministrator);
+
+-- add FK USER ALOCATION
+ALTER TABLE alacation ADD FOREIGN KEY (resource_fileID) REFERENCES resource_file(id_resource_file);
+
+-- add FK RESOURCE e ADMINISTRATOR
+ALTER TABLE administrator_has_resource ADD FOREIGN KEY (administratorID) REFERENCES administrator(idAdministrator);
+ALTER TABLE administrator_has_resource ADD FOREIGN KEY (resource_fileID) REFERENCES resource_file(id_resource_file);
+
+
+-- add FK RESOURCE e ADMINISTRATOR
+ALTER TABLE user_has_Alacation ADD FOREIGN KEY (useID) REFERENCES user(idUser);
+ALTER TABLE user_has_Alacation ADD FOREIGN KEY (AlacationID) REFERENCES alacation(idAlacation);
+
+
+
+
