@@ -28,3 +28,8 @@ def update_resource(name, id_resource:int):
     conection.updateResource(id_resource,name)
     return {'message':'sucessful'}
 
+@app.post("/deleteResource/{id}")
+def delete_resource(id:int):
+    conection.deleteResource(id)
+    return {'message':'sucessful'}
+
