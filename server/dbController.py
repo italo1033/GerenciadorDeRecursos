@@ -65,6 +65,15 @@ class DbController():
                     connection.commit()
                     print("Usuario Deleteado!")
 
+    def AlocationResource(self, idResource, idUser, dataInitial, dataFinal):
+        connection = self.getConnection()
+        with connection:
+            with connection.cursor() as cursor:
+                sql = 'INSERT INTO alocation (`resource_fileID`,`userID`, `dateIntial`, `dateFinal`) VALUES (%s,%s,%s,%s)'
+                cursor.execute(sql,(idResource, idUser, dataInitial, dataFinal))
+                connection.commit()
+                print("Locação Registrada!")
+
         
         
 
