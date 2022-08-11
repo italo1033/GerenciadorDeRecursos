@@ -13,8 +13,19 @@ class DbController():
         connection = self.getConnection()
         with connection:
             with connection.cursor() as cursor:
-                # Read a single record
-                sql = "SELECT * FROM `administrator`"
+                sql = """ SELECT * FROM resource_file """
                 cursor.execute(sql)
                 result = cursor.fetchall()
                 print(result)
+
+    def insertResource(self, resource):
+        connection = self.getConnection()
+        with connection:
+            with connection.cursor() as cursor:
+                sql = 'INSERT INTO resource_file (`name`) VALUES (%s)'
+                cursor.execute(sql,(resource))
+                connection.commit() #Confirmado Insert
+                print("ok")
+        
+        
+
