@@ -25,7 +25,7 @@ class DbController():
                 sql = 'INSERT INTO resource_file (`name`) VALUES (%s)'
                 cursor.execute(sql,(resource))
                 connection.commit() #Confirmado Insert
-                print("ok")
+                print("Recurso Inserido!")
 
     def updateResource(self, id, resource):
         connection = self.getConnection()
@@ -34,7 +34,7 @@ class DbController():
                 sql = 'UPDATE resource_file  SET name=%s WHERE id_resource_file=%s'
                 cursor.execute(sql,(resource , id))
                 connection.commit()
-                print("ok")
+                print("Recurso Atualizado!")
     def deleteResource(self, id):
         connection = self.getConnection()
         with connection:
@@ -42,7 +42,29 @@ class DbController():
                 sql = 'DELETE FROM resource_file WHERE id_resource_file=%s'
                 cursor.execute(sql,(id))
                 connection.commit()
-                print("ok")
+                print("Recurso Deletado!")
+    
+    def deleteUser(self, id):
+        connection = self.getConnection()
+        with connection:
+            with connection.cursor() as cursor:
+                sql = """ SELECT idAlocation FROM alocation where userID=%s"""
+                cursor.execute(sql,(id))
+                result = cursor.fetchall()
+                if(result):
+                    query= """DELETE FROM alocation  WHERE userID = %s"""
+                    cursor.execute(query,(id))
+                    connection.commit()
+                    sql = """DELETE FROM user WHERE idUser=%s"""
+                    cursor.execute(sql,(id))
+                    connection.commit()
+                    print("Usuario Deleteado!")
+                else:
+                    sql = """DELETE FROM user WHERE idUser=%s"""
+                    cursor.execute(sql,(id))
+                    connection.commit()
+                    print("Usuario Deleteado!")
+
         
         
 
