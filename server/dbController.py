@@ -33,7 +33,15 @@ class DbController():
             with connection.cursor() as cursor:
                 sql = 'UPDATE resource_file  SET name=%s WHERE id_resource_file=%s'
                 cursor.execute(sql,(resource , id))
-                connection.commit() #Confirmado Insert
+                connection.commit()
+                print("ok")
+    def deleteResource(self, id):
+        connection = self.getConnection()
+        with connection:
+            with connection.cursor() as cursor:
+                sql = 'DELETE FROM resource_file WHERE id_resource_file=%s'
+                cursor.execute(sql,(id))
+                connection.commit()
                 print("ok")
         
         
