@@ -30,18 +30,14 @@ CREATE TABLE administrator_has_resource(
 
 CREATE TABLE  alocation(
   idAlocation INT NOT NULL AUTO_INCREMENT,
+  userID INT NOT NULL,
   resource_fileID INT NOT NULL,
   dateIntial DATE NULL,
   dateFinal DATE NULL,
   PRIMARY KEY (idAlocation)
 );
 
-CREATE TABLE user_has_alocation(
-  idUser_has_Alocation INT NOT NULL AUTO_INCREMENT,
-  useID INT NOT NULL,
-  alocationID INT NOT NULL,
-  PRIMARY KEY (idUser_has_Alocation)
-);
+
 
 
 
@@ -58,10 +54,6 @@ ALTER TABLE alocation ADD FOREIGN KEY (resource_fileID) REFERENCES resource_file
 ALTER TABLE administrator_has_resource ADD FOREIGN KEY (administratorID) REFERENCES administrator(idAdministrator);
 ALTER TABLE administrator_has_resource ADD FOREIGN KEY (resource_fileID) REFERENCES resource_file(id_resource_file);
 
-
--- add FK RESOURCE e ADMINISTRATOR
-ALTER TABLE user_has_alocation ADD FOREIGN KEY (useID) REFERENCES user(idUser);
-ALTER TABLE user_has_alocation ADD FOREIGN KEY (alocationID) REFERENCES alocation(idAlocation);
 
 
 
