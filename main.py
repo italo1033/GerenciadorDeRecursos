@@ -23,13 +23,27 @@ def add_resource(name):
     conection.insertResource(name)
     return {'message':'sucessful'}
 
-@app.post("/updateResource/{id_resource}&{name}")
+@app.post("/AlocationResource/{id_resource}&{id_user}&{dateInitial}&{FinalInitial}")
+def alocation_Resource(id_resource:int, id_user:int , dateInitial,FinalInitial  ):
+    conection.AlocationResource(id_resource,id_user,dateInitial, FinalInitial)
+    return {'message':'sucessful'}
+
+@app.put("/updateResource/{id_resource}&{name}")
 def update_resource(name, id_resource:int):
     conection.updateResource(id_resource,name)
     return {'message':'sucessful'}
 
-@app.post("/deleteResource/{id}")
+@app.delete("/deleteResource/{id}")
 def delete_resource(id:int):
     conection.deleteResource(id)
     return {'message':'sucessful'}
+
+
+
+@app.delete("/deleteUser/{id}")
+def delete_user(id:int):
+    conection.deleteUser(id)
+    return {'message':'sucessful'}
+
+
 
