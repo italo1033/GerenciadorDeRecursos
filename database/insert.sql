@@ -29,8 +29,15 @@ INSERT INTO user (`name`, `administratorID`) VALUES ("rayra", 2);
 INSERT INTO user (`name`, `administratorID`) VALUES ("eduarda", 2);
 
 -- inserts alocation
-INSERT INTO alocation (`resource_fileID`, `dateIntial`, `dateFinal`) VALUES (1,"2022-05-10", "2022-05-13")
+INSERT INTO alocation (`resource_fileID`,`userID`, `dateIntial`, `dateFinal`) VALUES (1,1,"2022-05-10", "2022-05-13")
 
 
 -- inserts user_has_alocation
-INSERT INTO user_has_alocation (`useID`,`alocationID`) VALUES (1,1);
+
+
+
+SELECT * FROM  resource_file;
+SELECT * FROM  administrator;
+SELECT * FROM  administrator_has_resource;
+SELECT * FROM  user;
+SELECT * FROM  alocation;
