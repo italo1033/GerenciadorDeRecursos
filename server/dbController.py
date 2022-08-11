@@ -26,6 +26,15 @@ class DbController():
                 cursor.execute(sql,(resource))
                 connection.commit() #Confirmado Insert
                 print("ok")
+
+    def updateResource(self, id, resource):
+        connection = self.getConnection()
+        with connection:
+            with connection.cursor() as cursor:
+                sql = 'UPDATE resource_file  SET name=%s WHERE id_resource_file=%s'
+                cursor.execute(sql,(resource , id))
+                connection.commit() #Confirmado Insert
+                print("ok")
         
         
 
