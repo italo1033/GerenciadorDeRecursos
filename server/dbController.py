@@ -16,7 +16,7 @@ class DbController():
                 sql = """ SELECT * FROM resource_file """
                 cursor.execute(sql)
                 result = cursor.fetchall()
-                print(result)
+                return result
 
     def insertResource(self, resource):
         connection = self.getConnection()
@@ -25,7 +25,7 @@ class DbController():
                 sql = 'INSERT INTO resource_file (`name`) VALUES (%s)'
                 cursor.execute(sql,(resource))
                 connection.commit() #Confirmado Insert
-                print("Recurso Inserido!")
+                return print("Recurso Inserido!")
 
     def updateResource(self, id, resource):
         connection = self.getConnection()
