@@ -25,7 +25,7 @@ class DbController():
                 sql = 'INSERT INTO resource_file (`name`) VALUES (%s)'
                 cursor.execute(sql,(resource))
                 connection.commit() #Confirmado Insert
-                return print("Recurso Inserido!")
+                
 
     def updateResource(self, id, resource):
         connection = self.getConnection()

@@ -14,10 +14,17 @@ app = FastAPI()
 
 
 @app.get("/listResource")
-def listResource():
+def list_resource():
     return conection.select()
 
 
 @app.post("/insertResource/{name}")
-def addResource(name):
-    return conection.insertResource(name)
+def add_resource(name):
+    conection.insertResource(name)
+    return {'message':'sucessful'}
+
+@app.post("/updateResource/{id_resource}&{name}")
+def update_resource(name, id_resource:int):
+    conection.updateResource(id_resource,name)
+    return {'message':'sucessful'}
+
