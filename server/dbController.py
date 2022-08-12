@@ -26,13 +26,20 @@ class DbController():
             return {"message": e}
 
 
-    def insertResource(self, resource):
-        connection = self.getConnection()
-        with connection:
-            with connection.cursor() as cursor:
-                sql = 'INSERT INTO resource_file (`name`) VALUES (%s)'
-                cursor.execute(sql,(resource))
-                connection.commit() #Confirmado Insert
+    def insertResource(self, id_resource, resource, id_administrator):
+        try:
+            connection = self.getConnection()
+            with connection:
+                with connection.cursor() as cursor:
+                    sql = 'INSERT INTO resource_file (`id_resource_file`,`name`) VALUES (%s,%s)'
+                    cursor.execute(sql,(id_resource,resource))
+                    connection.commit() #Confirmado Insert
+
+                    query = 'INSERT INTO administrator_has_resource (`administratorID`, `resource_fileID`) VALUES (1,1);'
+                    cursor.execute(query,(id_administrator,id_resource))
+                    connection.commit() #Confirmado Insert
+        except Exception as e: 
+            return {"message": e}
                 
 
     def updateResource(self, id, resource):

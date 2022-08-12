@@ -18,9 +18,9 @@ def list_resource(id:int):
     return conection.select(id)
 
 
-@app.post("/insertResource/{name}")
-def add_resource(name):
-    conection.insertResource(name)
+@app.post("/insertResource/{name}&{id_resource}&{id_administrator}")
+def add_resource(id_resource:int, name, id_administrator:int ):
+    conection.insertResource(id_resource, name, id_administrator)
     return {'message':'sucessful'}
 
 @app.post("/AlocationResource/{id_resource}&{id_user}&{dateInitial}&{FinalInitial}")
@@ -37,8 +37,6 @@ def update_resource(name, id_resource:int):
 def delete_resource(id:int):
     conection.deleteResource(id)
     return {'message':'sucessful'}
-
-
 
 @app.delete("/deleteUser/{id}")
 def delete_user(id:int):
