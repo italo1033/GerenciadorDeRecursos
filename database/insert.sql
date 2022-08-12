@@ -47,4 +47,5 @@ SELECT * FROM  alocation;
 SELECT resource_file.name
 FROM administrator_has_resource
 INNER JOIN user ON administrator_has_resource.administratorID = user.administratorID
-INNER JOIN resource_file ON administrator_has_resource.resource_fileID = resource_file.id_resource_file;
+INNER JOIN resource_file ON administrator_has_resource.resource_fileID = resource_file.id_resource_file 
+where idUser=7;

@@ -13,9 +13,9 @@ conection = DbController()
 app = FastAPI()
 
 
-@app.get("/listResource")
-def list_resource():
-    return conection.select()
+@app.get("/listResource/{userID}")
+def list_resource(id:int):
+    return conection.select(id)
 
 
 @app.post("/insertResource/{name}")
