@@ -4,7 +4,7 @@ class DbController():
     def getConnection(self):
         connection = pymysql.connect(host='localhost',
                                 user='root',
-                                password='33!Talo10@',
+                                password='12',
                                 database='resource_menager',
                                 cursorclass=pymysql.cursors.DictCursor)
         return connection
@@ -101,6 +101,32 @@ class DbController():
                     print("Locação Registrada!")
         except Exception as e: 
             return {"message": e}
+        
+    def addUser(self, name, id):
+        try:
+            connection = self.getConnection()
+            with connection:
+                with connection.cursor() as cursor:
+                    sql = 'INSERT INTO user (`name`, `administratorID`) VALUES (%s, %s);'
+                    cursor.execute(sql,(name , id))
+                    connection.commit()
+                    print("Usuario Cadastrado!")
+        except Exception as e: 
+            return {"message": e}
+
+    def addAdministrator(self, name):
+        try:
+            connection = self.getConnection()
+            with connection:
+                with connection.cursor() as cursor:
+                    sql = 'INSERT INTO administrator (`name`) VALUES (%s)'
+                    cursor.execute(sql,(name))
+                    connection.commit()
+                    print("Usuario Cadastrado!")
+        except Exception as e: 
+            return {"message": e}
+
+
 
         
         
