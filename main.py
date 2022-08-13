@@ -18,6 +18,15 @@ def list_resource(id:int):
     return conection.select(id)
 
 
+@app.get("/listUser/{id_administrator}")
+def list_user(id_administrator:int):
+    return conection.listUser(id_administrator)
+
+@app.get("/listAdministrator/")
+def list_administrator():
+    return conection.listAdministrator()
+
+
 @app.post("/insertResource/{name}&{id_resource}&{id_administrator}")
 def add_resource(id_resource:int, name, id_administrator:int ):
     conection.insertResource(id_resource, name, id_administrator)

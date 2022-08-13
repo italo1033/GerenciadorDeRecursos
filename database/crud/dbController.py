@@ -138,6 +138,36 @@ class DbController():
         except Exception as e: 
             return {"message": e}
 
+    
+    def listAdministrator(self):
+        try:
+            connection = self.getConnection()
+            with connection:
+                with connection.cursor() as cursor:
+                    sql = ' SELECT * FROM  administrator'
+                    cursor.execute(sql)
+                    result = cursor.fetchall()
+                    return result
+        except Exception as e: 
+            return {"message": e}
+    
+    def listUser(self,id_administrator):
+        try:
+            connection = self.getConnection()
+            with connection:
+                with connection.cursor() as cursor:
+                    sql = """
+                            SELECT *
+                            FROM user
+                            INNER JOIN administrator ON administrator.idAdministrator = user.administratorID
+                            where administratorID=%s;
+                           """
+                    cursor.execute(sql,id_administrator)
+                    result = cursor.fetchall()
+                    return result
+        except Exception as e: 
+            return {"message": e}
+
 
 
         
