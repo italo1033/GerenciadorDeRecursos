@@ -53,6 +53,11 @@ def delete_user(id:int):
     conection.deleteUser(id)
     return {'message':'sucessful'}
 
+@app.delete("/deleteAlocation/{id_alocation}")
+def delete_alocation(id_alocation:int):
+    conection.deleteAlocation(id_alocation)
+    return {'message':'sucessful'}
+
 
 
 

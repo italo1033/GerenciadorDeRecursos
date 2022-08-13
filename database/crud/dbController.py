@@ -125,6 +125,18 @@ class DbController():
                     print("Usuario Cadastrado!")
         except Exception as e: 
             return {"message": e}
+    
+    def deleteAlocation(self, id):
+        try:
+            connection = self.getConnection()
+            with connection:
+                with connection.cursor() as cursor:
+                    query= """DELETE FROM alocation  WHERE idAlocation = %s"""
+                    cursor.execute(query,(id))
+                    connection.commit()
+                    print("Locacão cancelada")
+        except Exception as e: 
+            return {"message": e}
 
 
 
