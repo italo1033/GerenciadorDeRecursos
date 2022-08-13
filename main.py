@@ -1,4 +1,4 @@
-from GerenciadorDeRecursos.database.crud.dbController import DbController
+from database.crud.dbController import DbController
 from fastapi import FastAPI
 
 conection = DbController()
